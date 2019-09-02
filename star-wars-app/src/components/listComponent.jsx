@@ -23,7 +23,6 @@ class List extends Component {
             //rejected
             if (ex.response && ex.response.status === 404) {
                 //Handeling Response errors 404 specifically.
-                // to verify this add a wrong query like this in the file config.json->  "endPoint":"https://swapi.co/api/PPPpeople/"
                 toast.error("Data was not filled in correctly");
             }
         }
