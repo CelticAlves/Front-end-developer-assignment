@@ -4,6 +4,7 @@ import config from '../config.json';
 import { toast } from 'react-toastify';
 import Input from './input';
 import { Table } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 class List extends Component {
     state = {
@@ -14,10 +15,18 @@ class List extends Component {
 
     async componentDidMount() {
         //first state is always pending then can be resolved or rejected
+        //resolved
+        const { data: { results } } = await http.get(config.endPoint);
+        //Nested destructuring and asigned a variable (people)
+        this.setState({ people: results, isLoading: false });
+
+    }
+
+    handleSubmit = async event => {
+        event.preventDefault();
+        const { search } = this.state;
         try {
-            //resolved
-            const { data: { results } } = await http.get(config.endPoint);
-            //Nested destructuring and asigned a variable (people)
+            const { data: { results } } = await http.get(config.endPoint + "?search=" + search);
             this.setState({ people: results, isLoading: false });
         } catch (ex) {
             //rejected
@@ -26,55 +35,63 @@ class List extends Component {
                 toast.error("Data was not filled in correctly");
             }
         }
-    }
-
-    handleSubmit = async event => {
-        event.preventDefault();
-        const { search } = this.state;
-        const { data: { results } } = await http.get(config.endPoint + "?search=" + search);
-        this.setState({ people: results, isLoading: false });
 
     };
     handleChange = e => {
         let { search } = this.state;
         search = e.currentTarget.value;
-        this.setState({ search });
+        this.setState({ search, isLoading: true });
     };
 
     render() {
         const { people, isLoading, search } = this.state;
 
         return (
-            <div className="container">
-                <form className="m-5" onSubmit={this.handleSubmit}>
-                    <Input value={search} name="search" label="Search here:" onChange={this.handleChange} />
-                    <button className="btn btn-primary">Search</button>
-                </form>
+            <Container>
+                <Row>
+                    <Col>
+                        <form className="mb-3 mt-3" onSubmit={this.handleSubmit}>
+                            <Input value={search} name="search" label="Search here:" onChange={this.handleChange} />
+                            <button className="btn btn-primary">Search</button>
+                        </form>
+                    </Col>
+                </Row>
                 {!isLoading ? (
-                    <Table dark>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Eye Color</th>
-                                <th>Hair Color</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {people.map((people, index) => {
-                                return (<tr key={index}>
-                                    <th scope="row">{people.name}</th>
-                                    <td >{people.gender}</td>
-                                    <td >{people.eye_color}</td>
-                                    <td >{people.hair_color}</td>
-                                    {/* {console.log(Object(people).length)} */}
-                                </tr>
-                                )
-                            })}
-                        </tbody>
-                    </Table>) :
-                    <div>loading..</div>}
-            </div>);
+                    <Row>
+                        <Col>
+                            <Table dark responsive>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Eye Color</th>
+                                        <th>Hair Color</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {people.slice(0, 5).map((people, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <th scope="row">{people.name}</th>
+                                                <td >{people.gender}</td>
+                                                <td >{people.eye_color}</td>
+                                                <td >{people.hair_color}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>{people.length > 5 ? (
+                                <div><p>The total results are: {people.length}</p></div>) : (null)
+                            }
+                        </Col>
+                    </Row>) :
+                    <Row>
+                        <Col>
+                            <div className="loading"></div>
+                        </Col>
+                    </Row>
+                }
+            </Container>);
     }
 }
 
