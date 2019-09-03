@@ -6,8 +6,10 @@
 4 - I wasn't asked to do it, but i did a small menu bar with Routing just for fun.  
 
 ### errors 
-5 - To test the handle errors type a wrong query like this in the file config.json->  ```"endPoint":"https://swapi.co/api/PPPpeople/"``` (expected error 404) **in this case doesen't make to much sense to use 404 because is just a search option, but if it was a delete button would be fundamental.**  
-for unexpected errors ```"endPoint":"https://SSSswapi.co/api/people/"``` , you should get different messages.
+5 - To test the handle errors type a wrong query like this in the file config.json->  ```"endPoint":"https://swapi.co/api/PPPpeople/"```  
+(expected error 404) **in this case doesen't make to much sense to use 404 because is just a search option, but if it was a delete button would be fundamental.**  
+for unexpected errors:  
+```"endPoint":"https://SSSswapi.co/api/people/"``` , you should get different messages.
 
 ### http service
 I'm using axios library to fetch data.  
