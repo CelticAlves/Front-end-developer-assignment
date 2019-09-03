@@ -9,15 +9,18 @@
 5 - To test the handle errors type a wrong query like this in the file config.json->  ```"endPoint":"https://swapi.co/api/PPPpeople/"```  
 (expected error 404) **in this case doesen't make to much sense to use 404 because is just a search option, but if it was a delete button would be fundamental.**  
 for unexpected errors:  
-```"endPoint":"https://SSSswapi.co/api/people/"``` , you should get different messages.
+```"endPoint":"https://SSSswapi.co/api/people/"``` , you should get different messages( i used tostify for a nice animation).
 
 ### http service
 I'm using axios library to fetch data.  
-Did in a different file so if we need to change someting or copy the file to other project is easy. 
+Did in a different file so if we need to change someting or copy the file to other project is easy, Also for bigger aplication is better you don't need a bunch of code of the same. 
 ### Log errors
+This wasn't asked, but i created a Log for errors using Sentry.io
 I'm using sentry.io https://sentry.io/organizations/no-company-just-testing/issues/?project=1547627 , you can try this by creating a user in sentry.io and change in index.js  
 ```Sentry.init({ dsn: "https://52d04aed80c44c13a7ddcbbf28ab8c8a@sentry.io/1547627" });```  
 for one provided on your account.
 
 ### CSS Styling:
-I used Styled components technique (CSS-in-JS)https://medium.com/@dtinth/how-to-organize-css-in-multiple-files-21952654711
+I used mostly CSS Libraries, like bootstrap, react-bootstrap and reactstrap
+the rest of the styling is on app.css.
+bigger Aplications, would benefit of individual css files for each component. (BEM structure or styled components structure).
