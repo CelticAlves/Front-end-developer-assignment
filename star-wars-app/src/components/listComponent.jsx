@@ -3,9 +3,8 @@ import http from '../services/httpService';
 import config from '../config.json';
 import { toast } from 'react-toastify';
 import Input from './input';
-
+import { Table } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
-import TableResults from './table';
 
 class List extends Component {
     state = {
@@ -60,9 +59,28 @@ class List extends Component {
                 {!isLoading ? (
                     <Row>
                         <Col>
-                            {people.length > 0 ? (
-                                <TableResults value={people} />) : (<div>No results</div>)}
-                            {people.length > 5 ? (
+                            <Table dark responsive>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Gender</th>
+                                        <th>Eye Color</th>
+                                        <th>Hair Color</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {people.slice(0, 5).map((people, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <th scope="row">{people.name}</th>
+                                                <td >{people.gender}</td>
+                                                <td >{people.eye_color}</td>
+                                                <td >{people.hair_color}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </Table>{people.length > 5 ? (
                                 <div><p>The total results are: {people.length}</p></div>) : (null)
                             }
                         </Col>
