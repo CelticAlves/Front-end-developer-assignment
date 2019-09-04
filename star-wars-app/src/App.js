@@ -7,12 +7,14 @@ import Contact from './components/contact';
 import List from './components/listComponent';
 import { ToastContainer } from '../node_modules/react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Add from './components/add';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <Menu />
+      <Add />
       <Switch>
         <Route path="/about" component={About}></Route>
         <Route path="/contact" component={Contact}></Route>
